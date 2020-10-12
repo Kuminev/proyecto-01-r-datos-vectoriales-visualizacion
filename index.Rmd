@@ -128,11 +128,35 @@ kable_styling()
 ### Ejercicio 6 (15%)
 Con la función ```ggplot()``` del paquete [ggplot2](https://ggplot2.tidyverse.org/), genere un gráfico de barras que muestre la esperanza de vida de los países del continente asiático en los que esa esperanza de vida sea de al menos 80 años. El gráfico debe tener un título, los nombres (o códigos) de los países bajo cada barra, los valores sobre las barras y etiquetas para los ejes x e y.
 ```{r}
+asia_paises <- world[, c("continent", "lifeExp", "name_long"), drop=TRUE]
+
+asia_continente <- subset(
+  world[, c("continent", "lifeExp", "name_long"), drop=TRUE],
+  continent == "Asia" & lifeExp>=80
+)
+
+names (asia_continente)=c("Continente", "Expectativa", "País")
+
+ggplot(asia_continente, aes(x=reorder(País, -Expectativa), y=Expectativa)) +
+  ggtitle("Expectativa de vida en paises asiáticos") +
+  xlab("País") + 
+  ylab("Años de expectativa vida") +  
+  geom_col() +
+  geom_text(aes(label=Expectativa), vjust=-0.3, size=3.5)+
+  theme_bw()
+
 ```
 
 ### Ejercicio 7 (20%)
 Con la función ```plot()``` del paquete [sf](https://cran.r-project.org/web/packages/sf/index.html), genere un [mapa de coropletas](https://en.wikipedia.org/wiki/Choropleth_map) con colores que reflejen la esperanza de vida de los países del continente llamado Oceanía. El mapa debe llevar un título.
 ```{r}
+Oceania_conti <- world[world$continent=="Oceania",]
+
+plot(Oceania_conti["lifeExp"], main="Expectativa de vida")
+
+
+Oceania_conti
+
 ```
 
 ### Ejercicio 8 (20%)
