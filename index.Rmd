@@ -155,16 +155,47 @@ Oceania_conti <- world[world$continent=="Oceania",]
 plot(Oceania_conti["lifeExp"], main="Expectativa de vida")
 
 
-Oceania_conti
+  Oceania_conti
 
 ```
 
 ### Ejercicio 8 (20%)
 Extraiga en un nuevo data frame los países de Centroamérica con esperanza de vida mayor o igual a 74 años y genere el mapa de coropletas, con su título correspondiente.
 ```{r}
+centro_america1= world[world$name_long == "Belize" |
+                       world$name_long == "Guatemala" |
+                       world$name_long == "Honduras" |
+                       world$name_long == "El Salvador" |
+                       world$name_long == "Nicaragua" |
+                       world$name_long == "Costa Rica" |
+                       world$name_long == "Panama"
+                       ,]
+                       
+centro_america1 <- subset(
+  centro_america1[, c("subregion", "lifeExp", "name_long")],
+   lifeExp>=74
+  )
+
+plot(centro_america1["lifeExp"], main="Expectativa de vida")
+
 ```
 
 ### Ejercicio 9 (20%)
 Extraiga en un nuevo data frame los países de América del Sur con área de al menos 2.5 millones de km2 o población de al menos 40 millones de personas y genere un mapa de coropletas para cada variable (i.e. área y población), con sus títulos correspondientes.
 ```{r}
+sur_america<- world[world$continent=="South America",]
+
+sur_america2 <- subset(
+  sur_america[, c("continent", "lifeExp", "name_long", "area_km2", "pop")], area_km2>2500000)
+
+
+sur_america3 <- subset(
+  sur_america[, c("continent", "lifeExp", "name_long", "area_km2", "pop")], pop>=40000000)                 
+                    
+```
+```{r}
+plot(sur_america2["area_km2"], main="Área mayor a 2.5 mill")
+```
+```{r}
+plot(sur_america3["pop"], main="Población mayor a 40 mill")
 ```
